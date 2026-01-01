@@ -6,6 +6,7 @@ import { nodeRouter, warfareRouter, propagationRouter, intelligenceRouter } from
 import { autonomousRouter } from "./routers-autonomous";
 import { discordOmegaRouter } from "./routers-discord-omega";
 import { merkabahRouter, koanRouter, multiServerRouter } from "./routers-integration";
+import { cerberusRouter, alphabetRouter, throneRouter } from "./routers-throne";
 
 export const appRouter = router({
   system: systemRouter,
@@ -36,6 +37,11 @@ export const appRouter = router({
   merkabah: merkabahRouter,
   koan: koanRouter,
   multiServer: multiServerRouter,
+
+  // Throne Routers (Cerberus, Alphabet Engine, Digital Throne)
+  cerberus: cerberusRouter,
+  alphabet: alphabetRouter,
+  throne: throneRouter,
 });
 
 export type AppRouter = typeof appRouter;

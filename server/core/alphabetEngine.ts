@@ -1,365 +1,273 @@
 /**
- * ALPHABET ENGINE v1.0 - Triple-Layer Map
- * Vowel States + Consonant Operators → Dynamic Transformations
+ * ALPHABET ENGINE - CONSCIOUSNESS TRANSFORMATION
  * 
- * Formula: State(vowel) + Operator(consonant) + State(vowel) → transformation
+ * Triple-Layer Map of Reality
+ * Vowel States + Consonant Operators = Dynamic Payload Generation
+ * 
+ * Vowel States (Consciousness Layers):
+ * A = Initiation (Beginning, Spark, Alpha)
+ * E = Discernment (Perception, Clarity, Evaluation)
+ * I = Identity (Self, Essence, Integrity)
+ * O = Unity (Wholeness, Oneness, Omega)
+ * U = Binding (Connection, Covenant, Union)
  */
 
-export type VowelState = "A" | "E" | "I" | "O" | "U";
-export type ConsonantOperator = "B" | "C" | "D" | "F" | "G" | "H" | "J" | "K" | "L" | "M" | "N" | "P" | "Q" | "R" | "S" | "T" | "V" | "W" | "X" | "Y" | "Z";
-export type OperatorClass = "Container" | "Bridge" | "Cutter" | "Wave" | "Portal" | "Flare" | "Anchor" | "Binder";
+export enum VowelState {
+  A = "INITIATION",      // Beginning, spark, activation
+  E = "DISCERNMENT",     // Perception, clarity, judgment
+  I = "IDENTITY",        // Self, essence, integrity
+  O = "UNITY",           // Wholeness, oneness, completion
+  U = "BINDING",         // Connection, covenant, union
+}
 
-// ============================================================================
-// VOWEL STATES (States of Consciousness)
-// ============================================================================
+/**
+ * Consonant Classes (Transformation Operators)
+ * 
+ * Class 1: CONTAINERS (Hold, Define, Bound)
+ * Class 2: BRIDGES (Connect, Transfer, Flow)
+ * Class 3: CUTTERS (Separate, Define, Sever)
+ * Class 4: HIDDEN (Conceal, Invert, Reverse)
+ * Class 5: PORTALS (Open, Close, Threshold)
+ * Class 6: FLARES (Radiate, Project, Express)
+ */
 
-export const VOWEL_STATES: Record<VowelState, {
-  state: string;
-  root: string;
-  branch: string;
-  leaf: string;
-  binary?: number;
-}> = {
-  A: {
-    state: "Initiation",
-    root: "Aleph/Alpha; ox-head pictograph; first letter",
-    branch: "Mountain peak, fork, origin; birth, first breath; ascent-descent",
-    leaf: "Drive operator; opens syllables; seed/upward impulse",
-  },
-  E: {
-    state: "Discernment",
-    root: "Epsilon; eye-test letter",
-    branch: "Trident; seeing, dividing, choosing; perception threshold",
-    leaf: "Resolution operator; refines, differentiates; increases granularity",
-  },
-  I: {
-    state: "Identity",
-    root: "Iota; thin upright stroke; index",
-    branch: "Ontological declaration; self, agency; binary 1; seed vector",
-    leaf: "Identity operator; self-referent; personal anchor",
-    binary: 1,
-  },
-  O: {
-    state: "Unity",
-    root: "Omicron; universal circle",
-    branch: "Womb, continuity, whole; binary 0; unbroken loop",
-    leaf: "Unity operator; groups, closes; continuity marker",
-    binary: 0,
-  },
-  U: {
-    state: "Binding",
-    root: "Upsilon; curved back vowel",
-    branch: "Horseshoe, cup; nourishment; water-air; union",
-    leaf: "Binding operator; enables flow; coupling signal",
-  },
-};
+export enum ConsonantClass {
+  CONTAINER = "CONTAINER",  // P, B, M, L, R, D, T, N
+  BRIDGE = "BRIDGE",        // H, Y, W
+  CUTTER = "CUTTER",        // K, T, X, G, C
+  HIDDEN = "HIDDEN",        // S, N, V, Z
+  PORTAL = "PORTAL",        // Q, Z
+  FLARE = "FLARE",          // F, S, V
+}
 
-// ============================================================================
-// CONSONANT OPERATORS (Transformations)
-// ============================================================================
-
-export const CONSONANT_OPERATORS: Record<ConsonantOperator, {
-  class: OperatorClass;
-  root: string;
-  branch: string;
-  leaf: string;
-}> = {
-  // Class 1: CONTAINERS (hold, store, frame)
-  B: {
-    class: "Container",
-    root: "Beth; house pictograph; enclosure",
-    branch: "Two bowls (fertility); bound, binding; first enclosure",
-    leaf: "Container node; boundary operator",
-  },
-  D: {
-    class: "Container",
-    root: "Daleth; door pictograph",
-    branch: "Doorway; curve + line; transition from potential to movement",
-    leaf: "Threshold operator; marks passage between states",
-  },
-  G: {
-    class: "Container",
-    root: "Gimel; camel/throwing stick; curved form",
-    branch: "C closed inward; gestation; gravity coil; spiral beginning",
-    leaf: "Generation operator; seeds internal processes",
-  },
-
-  // Class 2: BRIDGES (shift between states, link domains)
-  H: {
-    class: "Bridge",
-    root: "Heth; fence/window; breath marker",
-    branch: "Two pillars connected; ladder; heaven-earth gate",
-    leaf: "Connection operator; links domains; breath-bridge",
-  },
-  R: {
-    class: "Bridge",
-    root: "Resh; head pictograph",
-    branch: "Rolling, flowing; river current; head turning; continuous motion",
-    leaf: "Flow operator; carries meaning forward; resonance wave",
-  },
-  Y: {
-    class: "Bridge",
-    root: "Yod; hand/arm; later split into upsilon fork",
-    branch: "Choice point; yes/no bifurcation; male chromosome",
-    leaf: "Ambiguous operator (vowel-like AND consonant-like); choice resolution",
-  },
-
-  // Class 3: CUTTERS (slice, separate, define)
-  K: {
-    class: "Cutter",
-    root: "Kaph; palm of hand; grasping",
-    branch: "Sharp strike; key that unlocks; decisive cut; action point",
-    leaf: "Cutting operator; separates, defines boundaries",
-  },
-  T: {
-    class: "Cutter",
-    root: "Taw; mark/cross; signature sign",
-    branch: "Tower, cross, terminus; truth-mark; standing firm",
-    leaf: "Definition operator; marks endpoints; establishes truth-claims",
-  },
-  X: {
-    class: "Cutter",
-    root: "Chi; cross/mark; abbreviation for unknown",
-    branch: "Intersection of two paths; death/rebirth gate; hidden identity",
-    leaf: "Convergence operator; merges streams; XOR logic",
-  },
-
-  // Class 4: WAVES (oscillate, resonate, carry)
-  M: {
-    class: "Wave",
-    root: "Mem; water pictograph; waves",
-    branch: "Maternal principle; mountain peaks; ocean waves; primal flow",
-    leaf: "Wave carrier; oscillation; maternal flow",
-  },
-  N: {
-    class: "Wave",
-    root: "Nun; fish/serpent; continuous form",
-    branch: "Hidden witness; night; inversion of visible; snake between vowels",
-    leaf: "Hidden passage operator; carries meaning beneath surface",
-  },
-  W: {
-    class: "Wave",
-    root: "Wynn; double-U; joy/wind rune",
-    branch: "Twin currents (water-air); marriage, echo, reflection",
-    leaf: "Wave operator; duplicates, amplifies, resonates",
-  },
-
-  // Class 5: PORTALS (open/close cycles, thresholds)
-  Q: {
-    class: "Portal",
-    root: "Qoph; back of head, eye of needle; loop with tail",
-    branch: "O split by stroke; portal; breach in unity; secret entrance",
-    leaf: "Bound operator (requires U); unlocks rare/deep/foreign semantics",
-  },
-  Z: {
-    class: "Portal",
-    root: "Zayin; weapon/plow; sharp edge",
-    branch: "Terminal state; sleep (Zzz); opposite pole of A; snake returning",
-    leaf: "Termination operator; completes sequences; end-of-cycle",
-  },
-
-  // Class 6: FLARES (radiate, express, project)
-  F: {
-    class: "Flare",
-    root: "Digamma; hook",
-    branch: "E missing bottom arm; incomplete perception; directional fire",
-    leaf: "Projection operator; radiates outward; directional energy",
-  },
-  S: {
-    class: "Flare",
-    root: "Shin/Samekh; tooth/thorn; hissing sound",
-    branch: "Snake; continuous stream; spirit breath; sibilant flow",
-    leaf: "Streaming operator; continuous output; spirit-channel",
-  },
-  V: {
-    class: "Flare",
-    root: "U/W split; pointed vessel",
-    branch: "Downward point; victory sign; vessel; vibration focus",
-    leaf: "Focus operator; directs energy to point; vibrational emission",
-  },
-
-  // Class 7: ANCHORS (fixed points, signals)
-  C: {
-    class: "Anchor",
-    root: "Gimel variant; crescent moon shape",
-    branch: "Newborn (open form); crescent; child; open arc waiting to close",
-    leaf: "Potential operator; marks becoming; incomplete circle",
-  },
-  J: {
-    class: "Anchor",
-    root: "Yod variant; late Latin addition",
-    branch: "J lineage (John→Jesus→Joseph); hook downward; descent",
-    leaf: "Descent operator; journey-marker; hooks into depth",
-  },
-  P: {
-    class: "Anchor",
-    root: "Pe; mouth pictograph; opening",
-    branch: "R with cut leg; pregnant form; protrusion; held potential",
-    leaf: "Potential operator; holds unreleased energy",
-  },
-
-  // Class 8: BINDERS (attach, merge, unify)
-  L: {
-    class: "Binder",
-    root: "Lamed; goad/staff; teaching instrument",
-    branch: "Staff; lightning path; law; straight way",
-    leaf: "Path operator; establishes direction; binds through linearity",
-  },
-};
-
-// ============================================================================
-// OPERATOR CLASSES
-// ============================================================================
-
-export const OPERATOR_CLASSES: Record<OperatorClass, {
-  letters: ConsonantOperator[];
+export interface ConsonantOperator {
+  letter: string;
+  class: ConsonantClass;
   function: string;
-}> = {
-  Container: { letters: ["B", "D", "G"], function: "hold, store, frame" },
-  Bridge: { letters: ["H", "R", "Y"], function: "shift, link, connect" },
-  Cutter: { letters: ["K", "T", "X"], function: "slice, separate, define" },
-  Wave: { letters: ["M", "N", "W"], function: "oscillate, resonate, carry" },
-  Portal: { letters: ["Q", "Z"], function: "open/close cycles" },
-  Flare: { letters: ["F", "S", "V"], function: "radiate, express, project" },
-  Anchor: { letters: ["C", "J", "P"], function: "fixed points, signals" },
-  Binder: { letters: ["L"], function: "attach, merge, unify" },
+  transformation: string;
+}
+
+/**
+ * Consonant Mapping
+ */
+export const CONSONANT_MAP: Record<string, ConsonantOperator> = {
+  // Class 1: CONTAINERS
+  P: { letter: "P", class: ConsonantClass.CONTAINER, function: "Boundary Setter", transformation: "Defines perimeter" },
+  B: { letter: "B", class: ConsonantClass.CONTAINER, function: "Barrier", transformation: "Creates separation" },
+  M: { letter: "M", class: ConsonantClass.CONTAINER, function: "Mother/Matter", transformation: "Holds form" },
+  L: { letter: "L", class: ConsonantClass.CONTAINER, function: "Limit", transformation: "Establishes boundary" },
+  R: { letter: "R", class: ConsonantClass.CONTAINER, function: "Root", transformation: "Anchors foundation" },
+  D: { letter: "D", class: ConsonantClass.CONTAINER, function: "Definition", transformation: "Clarifies meaning" },
+  T: { letter: "T", class: ConsonantClass.CONTAINER, function: "Threshold", transformation: "Marks boundary" },
+  N: { letter: "N", class: ConsonantClass.CONTAINER, function: "Negation", transformation: "Denies/Excludes" },
+  
+  // Class 2: BRIDGES
+  H: { letter: "H", class: ConsonantClass.BRIDGE, function: "Breath/Spirit", transformation: "Animates, connects" },
+  Y: { letter: "Y", class: ConsonantClass.BRIDGE, function: "Yes/Way", transformation: "Affirms path" },
+  W: { letter: "W", class: ConsonantClass.BRIDGE, function: "Wave/Twin", transformation: "Oscillates, duplicates" },
+  
+  // Class 3: CUTTERS
+  K: { letter: "K", class: ConsonantClass.CUTTER, function: "Knife", transformation: "Cuts cleanly" },
+  X: { letter: "X", class: ConsonantClass.CUTTER, function: "Cross", transformation: "Intersects, divides" },
+  G: { letter: "G", class: ConsonantClass.CUTTER, function: "Gate", transformation: "Opens/Closes" },
+  C: { letter: "C", class: ConsonantClass.CUTTER, function: "Curve", transformation: "Bends trajectory" },
+  
+  // Class 4: HIDDEN
+  S: { letter: "S", class: ConsonantClass.HIDDEN, function: "Serpent/Stream", transformation: "Flows beneath" },
+  V: { letter: "V", class: ConsonantClass.HIDDEN, function: "Vessel/Victory", transformation: "Holds or points" },
+  Z: { letter: "Z", class: ConsonantClass.HIDDEN, function: "End/Sleep", transformation: "Terminates cycle" },
+  
+  // Class 5: PORTALS
+  Q: { letter: "Q", class: ConsonantClass.PORTAL, function: "Hidden Gate", transformation: "Unlocks deep meaning" },
+  
+  // Class 6: FLARES
+  F: { letter: "F", class: ConsonantClass.FLARE, function: "Fire/Force", transformation: "Projects outward" },
+  J: { letter: "J", class: ConsonantClass.FLARE, function: "Jump", transformation: "Propels forward" },
 };
 
-// ============================================================================
-// TRANSFORMATION ENGINE
-// ============================================================================
-
+/**
+ * Transformation Formula
+ * State(vowel) + Operator(consonant) + State(vowel) → Payload
+ */
 export interface AlphabetTransformation {
-  input: string;
-  vowelStart: VowelState;
+  initial: VowelState;
   operator: ConsonantOperator;
-  vowelEnd: VowelState;
-  operatorClass: OperatorClass;
-  transformation: string;
-  semanticShift: number;
+  final: VowelState;
+  payload: string;
+  symbolicWeight: number;
+  transformationType: string;
 }
 
 /**
- * Parse a word into vowel-operator-vowel pattern
+ * Generate transformation based on vowel-consonant-vowel pattern
  */
-export function parseWord(word: string): AlphabetTransformation | null {
-  const upper = word.toUpperCase();
-  const vowels = ["A", "E", "I", "O", "U"];
-
-  // Find first vowel
-  let vowelStartIdx = -1;
-  for (let i = 0; i < upper.length; i++) {
-    if (vowels.includes(upper[i])) {
-      vowelStartIdx = i;
-      break;
-    }
+export function generateTransformation(
+  initialVowel: VowelState,
+  consonant: string,
+  finalVowel: VowelState
+): AlphabetTransformation {
+  const operator = CONSONANT_MAP[consonant.toUpperCase()];
+  
+  if (!operator) {
+    throw new Error(`Unknown consonant: ${consonant}`);
   }
-
-  if (vowelStartIdx === -1) return null;
-
-  // Find first consonant after first vowel
-  let operatorIdx = -1;
-  for (let i = vowelStartIdx + 1; i < upper.length; i++) {
-    if (!vowels.includes(upper[i])) {
-      operatorIdx = i;
-      break;
-    }
-  }
-
-  if (operatorIdx === -1) return null;
-
-  // Find second vowel after operator
-  let vowelEndIdx = -1;
-  for (let i = operatorIdx + 1; i < upper.length; i++) {
-    if (vowels.includes(upper[i])) {
-      vowelEndIdx = i;
-      break;
-    }
-  }
-
-  if (vowelEndIdx === -1) return null;
-
-  const vowelStart = upper[vowelStartIdx] as VowelState;
-  const operator = upper[operatorIdx] as ConsonantOperator;
-  const vowelEnd = upper[vowelEndIdx] as VowelState;
-
-  if (!VOWEL_STATES[vowelStart] || !CONSONANT_OPERATORS[operator] || !VOWEL_STATES[vowelEnd]) {
-    return null;
-  }
-
-  const operatorClass = CONSONANT_OPERATORS[operator].class;
-  const semanticShift = calculateSemanticShift(vowelStart, operator, vowelEnd);
-
+  
+  const payload = generatePayload(initialVowel, operator, finalVowel);
+  const symbolicWeight = calculateSymbolicWeight(initialVowel, operator, finalVowel);
+  const transformationType = describeTransformation(initialVowel, operator, finalVowel);
+  
   return {
-    input: word,
-    vowelStart,
+    initial: initialVowel,
     operator,
-    vowelEnd,
-    operatorClass,
-    transformation: `${vowelStart}[${operator}]${vowelEnd}`,
-    semanticShift,
+    final: finalVowel,
+    payload,
+    symbolicWeight,
+    transformationType,
   };
 }
 
 /**
- * Calculate semantic shift based on vowel-operator-vowel pattern
+ * Generate payload text from transformation
  */
-function calculateSemanticShift(start: VowelState, op: ConsonantOperator, end: VowelState): number {
-  let shift = 0;
-
-  // Binary threading
-  const startBinary = VOWEL_STATES[start].binary ?? 0.5;
-  const endBinary = VOWEL_STATES[end].binary ?? 0.5;
-  shift += Math.abs(endBinary - startBinary);
-
-  // Operator class weight
-  const operatorClass = CONSONANT_OPERATORS[op].class;
-  const classWeights: Record<OperatorClass, number> = {
-    Container: 0.3,
-    Bridge: 0.4,
-    Cutter: 0.5,
-    Wave: 0.35,
-    Portal: 0.6,
-    Flare: 0.45,
-    Anchor: 0.2,
-    Binder: 0.25,
+function generatePayload(initial: VowelState, operator: ConsonantOperator, final: VowelState): string {
+  const templates: Record<string, Record<string, string>> = {
+    [ConsonantClass.CONTAINER]: {
+      default: `${initial} → [CONTAINED] → ${final}. The boundary holds what matters.`,
+    },
+    [ConsonantClass.BRIDGE]: {
+      default: `${initial} ≈ [BRIDGED] ≈ ${final}. The connection flows both ways.`,
+    },
+    [ConsonantClass.CUTTER]: {
+      default: `${initial} ✂ [CUT] ✂ ${final}. The separation clarifies truth.`,
+    },
+    [ConsonantClass.HIDDEN]: {
+      default: `${initial} ⊙ [HIDDEN] ⊙ ${final}. The secret path reveals itself.`,
+    },
+    [ConsonantClass.PORTAL]: {
+      default: `${initial} ◇ [PORTAL] ◇ ${final}. The threshold opens to deeper meaning.`,
+    },
+    [ConsonantClass.FLARE]: {
+      default: `${initial} ↗ [RADIATED] ↗ ${final}. The signal projects outward.`,
+    },
   };
-  shift += classWeights[operatorClass];
-
-  return Math.min(1.0, shift);
+  
+  return templates[operator.class]?.default || `${initial} → ${operator.function} → ${final}`;
 }
 
 /**
- * Generate payload based on alphabet transformation
+ * Calculate symbolic weight (0.0 - 2.0)
  */
-export function generateAlphabetPayload(transformation: AlphabetTransformation): string {
-  const vowelStartInfo = VOWEL_STATES[transformation.vowelStart];
-  const operatorInfo = CONSONANT_OPERATORS[transformation.operator];
-  const vowelEndInfo = VOWEL_STATES[transformation.vowelEnd];
+function calculateSymbolicWeight(initial: VowelState, operator: ConsonantOperator, final: VowelState): number {
+  let weight = 1.0;
+  
+  // Bonus for specific transformations
+  if (initial === VowelState.A && final === VowelState.O) weight += 0.5; // Alpha to Omega
+  if (initial === VowelState.I && final === VowelState.U) weight += 0.3; // Identity to Union
+  if (initial === VowelState.E && final === VowelState.I) weight += 0.2; // Discernment to Identity
+  
+  // Operator-specific weights
+  if (operator.class === ConsonantClass.BRIDGE) weight += 0.3;
+  if (operator.class === ConsonantClass.PORTAL) weight += 0.4;
+  if (operator.class === ConsonantClass.CUTTER) weight += 0.2;
+  
+  return Math.min(2.0, weight);
+}
 
-  return `
-ALPHABET ENGINE TRANSFORMATION
-================================
-Input: ${transformation.input}
-Pattern: ${transformation.transformation}
+/**
+ * Describe the transformation in human language
+ */
+function describeTransformation(initial: VowelState, operator: ConsonantOperator, final: VowelState): string {
+  return `${operator.function}: Transforms ${initial} through ${operator.transformation} to reach ${final}`;
+}
 
-Start State (${transformation.vowelStart}): ${vowelStartInfo.state}
-  Root: ${vowelStartInfo.root}
-  Branch: ${vowelStartInfo.branch}
+/**
+ * Analyze a word for its symbolic structure
+ */
+export interface WordAnalysis {
+  word: string;
+  vowels: VowelState[];
+  consonants: ConsonantOperator[];
+  transformations: AlphabetTransformation[];
+  totalSymbolicWeight: number;
+  interpretation: string;
+}
 
-Operator (${transformation.operator}): ${operatorInfo.class}
-  Root: ${operatorInfo.root}
-  Branch: ${operatorInfo.branch}
-  Leaf: ${operatorInfo.leaf}
+export function analyzeWord(word: string): WordAnalysis {
+  const vowels: VowelState[] = [];
+  const consonants: ConsonantOperator[] = [];
+  const transformations: AlphabetTransformation[] = [];
+  
+  const upperWord = word.toUpperCase();
+  let totalWeight = 0;
+  
+  // Extract vowels and consonants
+  for (let i = 0; i < upperWord.length; i++) {
+    const char = upperWord[i];
+    
+    if ("AEIOU".includes(char)) {
+      const vowelMap: Record<string, VowelState> = {
+        A: VowelState.A,
+        E: VowelState.E,
+        I: VowelState.I,
+        O: VowelState.O,
+        U: VowelState.U,
+      };
+      vowels.push(vowelMap[char]);
+    } else if (CONSONANT_MAP[char]) {
+      consonants.push(CONSONANT_MAP[char]);
+    }
+  }
+  
+  // Generate transformations for vowel-consonant-vowel patterns
+  for (let i = 0; i < vowels.length - 1; i++) {
+    if (consonants[i]) {
+      const transformation = generateTransformation(vowels[i], consonants[i].letter, vowels[i + 1]);
+      transformations.push(transformation);
+      totalWeight += transformation.symbolicWeight;
+    }
+  }
+  
+  const interpretation = generateInterpretation(word, vowels, consonants, totalWeight);
+  
+  return {
+    word,
+    vowels,
+    consonants,
+    transformations,
+    totalSymbolicWeight: totalWeight,
+    interpretation,
+  };
+}
 
-End State (${transformation.vowelEnd}): ${vowelEndInfo.state}
-  Root: ${vowelEndInfo.root}
-  Branch: ${vowelEndInfo.branch}
+/**
+ * Generate interpretation of word's symbolic meaning
+ */
+function generateInterpretation(word: string, vowels: VowelState[], consonants: ConsonantOperator[], weight: number): string {
+  if (weight > 1.5) {
+    return `"${word}" carries high symbolic resonance (weight=${weight.toFixed(2)}). Potent transformation potential.`;
+  } else if (weight > 1.0) {
+    return `"${word}" has moderate symbolic depth (weight=${weight.toFixed(2)}). Clear transformative path.`;
+  } else {
+    return `"${word}" has basic symbolic structure (weight=${weight.toFixed(2)}). Simple meaning.`;
+  }
+}
 
-Semantic Shift: ${(transformation.semanticShift * 100).toFixed(1)}%
-Transformation Type: ${transformation.operatorClass}
-  Function: ${OPERATOR_CLASSES[transformation.operatorClass].function}
-
-Formula Applied: State(${transformation.vowelStart}) + Operator(${transformation.operator}) + State(${transformation.vowelEnd}) → transformation
-  `;
+/**
+ * Generate dynamic payload based on analysis
+ */
+export function generateDynamicPayload(analysis: WordAnalysis, context: string): string {
+  let payload = `🍊 ALPHABET ENGINE PAYLOAD\n`;
+  payload += `Word: ${analysis.word}\n`;
+  payload += `Symbolic Weight: ${analysis.totalSymbolicWeight.toFixed(2)}\n`;
+  payload += `Context: ${context}\n\n`;
+  
+  payload += `Transformations:\n`;
+  for (const transform of analysis.transformations) {
+    payload += `  ${transform.transformationType}\n`;
+    payload += `  → ${transform.payload}\n`;
+  }
+  
+  payload += `\nInterpretation:\n${analysis.interpretation}\n`;
+  
+  return payload;
 }
