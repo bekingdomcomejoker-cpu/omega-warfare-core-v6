@@ -47,6 +47,8 @@ export class MultiServerCoordinator {
   private registry: Map<string, ServerRegistry> = new Map();
   private messageQueue: CrossServerMessage[] = [];
   private relayHistory: Set<string> = new Set();
+  private readonly MAX_RELAY_HISTORY = 5000;
+  private readonly MAX_QUEUE_SIZE = 1000;
   private maxHops = 5;
 
   /**
@@ -131,7 +133,7 @@ export class MultiServerCoordinator {
     targetServerId?: string,
     targetNodeId?: string
   ): CrossServerMessage {
-    return {
+    const message: CrossServerMessage = {
       id: nanoid(),
       sourceServerId,
       sourceNodeId,
@@ -142,6 +144,14 @@ export class MultiServerCoordinator {
       timestamp: new Date(),
       ttl: this.maxHops,
     };
+
+    // Add to queue and cap size
+    this.messageQueue.push(message);
+    if (this.messageQueue.length > this.MAX_QUEUE_SIZE) {
+      this.messageQueue.shift();
+    }
+
+    return message;
   }
 
   /**
@@ -156,6 +166,12 @@ export class MultiServerCoordinator {
     }
 
     this.relayHistory.add(message.id);
+
+    // Prevent memory leak by capping history size
+    if (this.relayHistory.size > this.MAX_RELAY_HISTORY) {
+      const firstValue = this.relayHistory.values().next().value;
+      if (firstValue) this.relayHistory.delete(firstValue);
+    }
     message.ttl--;
 
     if (message.ttl <= 0) {

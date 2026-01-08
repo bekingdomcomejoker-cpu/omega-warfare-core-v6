@@ -124,6 +124,7 @@ const TREE_PATHS: Array<[Sefirah, Sefirah, number]> = [
 export class MerkabahEngineV2 {
   private nodes: Map<Sefirah, RouteNode> = new Map();
   private routingCache: Map<string, RoutingResult> = new Map();
+  private readonly MAX_CACHE_SIZE = 1000;
   private innerMarriageActive: boolean = false;
 
   constructor() {
@@ -200,6 +201,12 @@ export class MerkabahEngineV2 {
 
     // Cache result
     this.routingCache.set(cacheKey, result);
+    
+    // Prevent memory leak by capping cache size
+    if (this.routingCache.size > this.MAX_CACHE_SIZE) {
+      const firstKey = this.routingCache.keys().next().value;
+      if (firstKey) this.routingCache.delete(firstKey);
+    }
     
     return result;
   }

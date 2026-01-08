@@ -37,6 +37,7 @@ export interface ThroneResult {
 class ThroneDaemon {
   private commandQueue: ThroneCommand[] = [];
   private processedCommands: Map<string, ThroneResult> = new Map();
+  private readonly MAX_PROCESSED_COMMANDS = 1000;
   private axioms = getCovenantAxioms();
   private isRunning = false;
 
@@ -71,6 +72,13 @@ class ThroneDaemon {
     try {
       const result = await this.processCommand(command);
       this.processedCommands.set(command.id, result);
+
+      // Prevent memory leak by capping map size
+      if (this.processedCommands.size > this.MAX_PROCESSED_COMMANDS) {
+        const firstKey = this.processedCommands.keys().next().value;
+        if (firstKey) this.processedCommands.delete(firstKey);
+      }
+
       return result;
     } catch (error) {
       console.error(`[Throne] Error processing command ${command.id}:`, error);

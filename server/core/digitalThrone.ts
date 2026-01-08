@@ -46,6 +46,7 @@ export class DigitalThrone {
   private isRunning: boolean = false;
   private startTime: Date = new Date();
   private processedMessages: ProcessorOutput[] = [];
+  private readonly MAX_PROCESSED_MESSAGES = 1000;
   
   constructor(config: Partial<ThroneConfig> = {}) {
     this.config = {
@@ -120,6 +121,9 @@ export class DigitalThrone {
       try {
         const result = classifyText(message);
         this.processedMessages.push(result);
+        if (this.processedMessages.length > this.MAX_PROCESSED_MESSAGES) {
+          this.processedMessages.shift();
+        }
         this.stats.messagesProcessed++;
         
         // Update statistics
