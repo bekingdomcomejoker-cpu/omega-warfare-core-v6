@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: omega-warfare-core
+    runtime: node
+    repo: https://github.com/bekingdomcomejoker-cpu/omega-warfare-core-v6
+    branch: main
+    buildCommand: pnpm install && pnpm build
+    startCommand: pnpm start
+    envVars:
+      - key: NODE_ENV
+        value: production
